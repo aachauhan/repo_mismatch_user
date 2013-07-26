@@ -152,6 +152,7 @@
 					else{
 						echo "Username is taken try Again";
 					}
+					echo "Thanks you for Registration";
 			}
 			else{
 				echo "Enter all the information correct";

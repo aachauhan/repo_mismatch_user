@@ -1,82 +1,76 @@
-<?php
-	require_once 'mismatch_login.php';
-?>
-<html>
-	<head>
-		<title>MisMatch:|:[:]:|:Register</title>
-	</head>
-	<!-- Body START -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  	<title>MisMatch:|:[:]:|:Edit Profile</title>
+</head>
 	<body>
-		<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-			<table>
-				<th><h3>Personal Information</h3></th>
-					
-					<section>
-						<tr>
-							<td>
-								<label for="fname">First Name: </label>
-							</td>
-							<td>
-								<?php $dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user'); $sql = " SELECT * FROM user_info WHERE username = '$username'"; $result = mysqli_query($dbc, $sql); if (mysqli_num_rows($result) == 1) { while ($row = mysqli_fetch_array($result)) { $firstname = $row['first_name']; } } echo "<input type='text' name='first_name' value = '$firstname' /><br>"; ?>
-							</td>
-						</tr>
-
-						<tr>
-							<td>
-								<label for="lname">Last Name: </label>
-							</td>
-							<td>
-								<?php $dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user'); $sql = " SELECT * FROM user_info WHERE username = '$username'"; $result = mysqli_query($dbc, $sql); if (mysqli_num_rows($result) == 1) { while ($row = mysqli_fetch_array($result)) { $lastname = $row['last_name']; } } echo "<input type='text' name='last_name' value = '$lastname' /><br>"; ?>
-							</td>
-						</tr>
-					
-						<tr>
-							<td>
-								<label for="birth_date">Birth-Date (mm/dd/yyyy): </label>
-							</td>
-							<td>
-								<?php $dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user'); $sql = " SELECT * FROM user_info WHERE username = '$username'"; $result = mysqli_query($dbc, $sql); if (mysqli_num_rows($result) == 1) { while ($row = mysqli_fetch_array($result)) { $birthdate = $row['birth_date']; } } echo "<input type='text' name='birth_date' value = '$birthdate' /><br>"; ?>
-							</td>
-						</tr>
-
-						<tr>
-							<td>
-								<label for="city">City: </label>
-							</td>
-							<td>
-								<?php $dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user'); $sql = " SELECT * FROM user_info WHERE username = '$username'"; $result = mysqli_query($dbc, $sql); if (mysqli_num_rows($result) == 1) { while ($row = mysqli_fetch_array($result)) { $city = $row['city']; } } echo "<input type='text' name='city' value = '$city' /><br>"; ?>
-							</td>
-						</tr>
-						
-						<tr>
-							<td>
-								<label for="state">State: </label>
-							</td>
-							<td>
-								<?php $dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user'); $sql = " SELECT * FROM user_info WHERE username = '$username'"; $result = mysqli_query($dbc, $sql); if (mysqli_num_rows($result) == 1) { while ($row = mysqli_fetch_array($result)) { $state = $row['state']; } } echo "<input type='text' name='state' value = '$state' /><br>"; ?>
-							</td>
-						</tr>
-
-						<tr>
-							<td>
-								<label for="profile_pic">Upload your picture: </label>
-							</td>
-							<td>
-								<input type="file" name="profile_pic" /><br>
-							</td>
-						</tr>
-						
-						<tr>
-							<td><input type="submit" value="Submit" name="submit" /></td>
-						</tr>
-					</section>
-			</table>
-		</form>
-
-		<!-- PHP Scipt START -->
 		<?php
-		require 'php_edit_sub.php';
+			define('GW_UPLOADPATH', 'Image/');
+			if (isset($_POST['submit'])) {
+				# code...
+				$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user');
+				$firstname = mysqli_real_escape_string($dbc, trim($_POST['firstname']));
+				$lastname = mysqli_real_escape_string($dbc, trim($_POST['lastname']));
+				$birthdate = mysqli_real_escape_string($dbc, trim($_POST['birthdate']));
+				$city = mysqli_real_escape_string($dbc, trim($_POST['city']));
+				$state = mysqli_real_escape_string($dbc, trim($_POST['state']));
+				/*$old_picture = mysqli_real_escape_string($dbc, trim($_POST['old_picture']));*/
+	    		$new_picture = mysqli_real_escape_string($dbc, trim($_FILES['new_picture']['name']));
+	    		$new_picture_type = $_FILES['new_picture']['type'];
+	    		$target = GW_UPLOADPATH . $new_picture;
+
+	    		//move and upoad new profile picture
+	    		if (!empty($new_picture)) {
+	    			# code...
+	    			if ($new_picture_type == 'image/jpeg' || $new_picture_type == 'image/png' || $new_picture_type == 'image/gif') {
+	    				# code...
+	    				$img = move_uploaded_file($_FILES['new_picture']['tmp_name'], $target);
+	    				$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user');
+	    				$sql = "UPDATE user_info SET first_name = '$firstname'";
+	    				mysqli_query($dbc, $img, $sql);
+	    				echo "Data is updated with Profile Picture";
+	    			}
+	    			else{
+	    				echo "Only JPEG, PNG, GIF files are supported";
+	    			}
+	    		}
+	    		
+	    		else{
+	    			$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user');
+	    			echo $firstname;
+	    			$sql = "UPDATE `mismatch_user`.`user_info` SET `first_name` = $firstname WHERE `user_info`.`Id` = 11;";
+	    			mysqli_query($dbc, $sql);
+	    			echo "Only data is updated";
+	    		}
+				/*$firstname = '';*/
+				$lastname = '';
+				$birthdate = '';
+				$city = '';
+				$state = '';
+	    	}
 		?>
-		Go to <a href="mismatch_index.php">Index</a>.
+		
+		<!-- Form start -->
+		<form enctype="multipart/form-data" method = "post" action = "<?PHP echo $_SERVER['PHP_SELF']; ?>">
+			<fieldset>
+				<legend>Edit Personal Information</legend>
+					<label for = "firstname">Firstname</label>
+						<input type = "text" name = "firstname" value = "<?php if (!empty($firstname)) echo $firstname; ?>" /><br />
+					<label for = "lastname">Lastname</label>
+						<input type = "text" name = "lastname" value = "<?php if (!empty($lastname)) echo $lastname; ?>" /><br />
+					<label for = "birthdate" >Birthdate</label>
+						<input type = "text" name = "birthdate" value = "<?php if (!empty($birthdate)) echo $birthdate; ?>" /><br />
+					<label for = "city">City</label>
+						<input type = "text" name = "city" value = "<?php if (!empty($city)) echo $city; ?>" /><br />
+					<label for = "state">State</label>
+						<input type = "text" name = "state" value = "<?php if (!empty($state)) echo $state; ?>" /><br />
+					<label for = "new_picture">New Picture</label>
+						<input type = 'file' name = 'new_picture'><br />
+			</fieldset>
+			<input type = 'submit' name = 'submit' value = "submit">
+		</form>
+		<a href="mismatch_index.php">Index</a>
 	</body>
 </html>

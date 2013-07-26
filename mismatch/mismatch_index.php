@@ -3,9 +3,18 @@
 		<title>MisMatch:|:[:]:|:Homepage</title>
 	</head>
 	<body>
-		<a href="mismatch_edit_profile.php">Edit your profile</a>
-		<a href="mismatch_view_profile.php">View Profile</a>
 		<?php
+			if (!isset($_COOKIE['username'])) {
+				# code...
+				echo "<a href='mismatch_cookie_login.php'>Log-In</a>";
+				echo "<a href='mismatch_user_register.php'>Register</a>";
+
+			}
+			if (isset($_COOKIE['username'])) {
+				echo '&#10084; <a href="mismatch_view_profile.php">View Profile</a><br />';
+				echo '&#10084; <a href="mismatch_edit_profile.php">Edit Profile</a><br />';
+				echo '&#10084; <a href="mismatch_user_logout.php">Log Out (' . $_COOKIE['username'] . ')</a>';
+			}
 		define('GW_UPLOADPATH', 'Image/');
 		$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user') or die('Error Connecting Database');
 		$sql = "SELECT * FROM user_info";
