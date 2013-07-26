@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>MisMatch:||:Register</title>
+		<title>MisMatch:|:[:]:|:Register</title>
 	</head>
 	<!-- Body START -->
 	<body>
@@ -142,7 +142,7 @@
 						$res = mysqli_query($dbc, $sql, $img);
 
 						//confimation
-						echo "Thanks for registering ".$fname." ".$lname ."<br>".$gender."<br>".$birth_date." ".$city." ".$state." Your screenshot "."<br>".'<img src="' . GW_UPLOADPATH . $profile_pic . '" alt="Score image" />';
+							
 					}
 					# code...
 					else{

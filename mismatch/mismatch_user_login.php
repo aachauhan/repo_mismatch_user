@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>MisMatch:||:LogIn</title>
+		<title>MisMatch:|:[:]:|:LogIn</title>
 		<link rel="stylesheet" type="text/css" href="">
 	</head>
 	<body>

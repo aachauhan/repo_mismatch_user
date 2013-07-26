@@ -1,9 +1,10 @@
 <html>
 	<head>
-		<title>MisMatch:||:Homepage</title>
+		<title>MisMatch:|:[:]:|:Homepage</title>
 	</head>
-	<a href="mismatch_view_profile.php">View Profile</a>
 	<body>
+		<a href="mismatch_edit_profile.php">Edit your profile</a>
+		<a href="mismatch_view_profile.php">View Profile</a>
 		<?php
 		define('GW_UPLOADPATH', 'Image/');
 		$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user') or die('Error Connecting Database');
