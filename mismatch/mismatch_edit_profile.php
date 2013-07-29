@@ -1,3 +1,6 @@
+<?php
+	session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -7,7 +10,13 @@
 </head>
 	<body>
 		<?php
+			//header and Nav bar
+			require 'mismatch_header.php';
+			require 'mismatch_navbar.php';
+			//define
 			define('GW_UPLOADPATH', 'Image/');
+			$uid = $_SESSION['user_id'];
+			
 			if (isset($_POST['submit'])) {
 				# code...
 				$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user');
@@ -26,10 +35,10 @@
 	    			# code...
 	    			if ($new_picture_type == 'image/jpeg' || $new_picture_type == 'image/png' || $new_picture_type == 'image/gif') {
 	    				# code...
-	    				$img = move_uploaded_file($_FILES['new_picture']['tmp_name'], $target);
 	    				$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user');
-	    				$sql = "UPDATE user_info SET first_name = '$firstname'";
-	    				mysqli_query($dbc, $img, $sql);
+	    				$img = move_uploaded_file($_FILES['new_picture']['tmp_name'], $target);
+	    				$query = "UPDATE user_info SET first_name = '$firstname', last_name = '$lastname', birth_date = '$birthdate', city = '$city', state = '$state' profile_pic = '$new_picture' where Id = '$uid'";
+	    				mysqli_query($dbc, $query, $img);
 	    				echo "Data is updated with Profile Picture";
 	    			}
 	    			else{
@@ -40,15 +49,15 @@
 	    		else{
 	    			$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user');
 	    			echo $firstname;
-	    			$sql = "UPDATE `mismatch_user`.`user_info` SET `first_name` = $firstname WHERE `user_info`.`Id` = 11;";
+	    			$sql = "UPDATE user_info SET first_name = '$firstname', last_name = '$lastname', birth_date = '$birthdate', city = '$city', state = '$state' WHERE Id = '$uid'";
 	    			mysqli_query($dbc, $sql);
 	    			echo "Only data is updated";
 	    		}
-				/*$firstname = '';*/
+				/*$firstname = '';
 				$lastname = '';
 				$birthdate = '';
 				$city = '';
-				$state = '';
+				$state = '';*/
 	    	}
 		?>
 		

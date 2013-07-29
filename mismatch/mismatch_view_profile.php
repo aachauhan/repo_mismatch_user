@@ -1,5 +1,5 @@
 <?php
-	require_once 'mismatch_login.php';
+	session_start();
 ?>
 <html>
 	<head>
@@ -7,8 +7,10 @@
 	</head>
 	<body>
 		<?php
-		
+			require 'mismatch_header.php';
+			require 'mismatch_navbar.php';
 			define('GW_UPLOADPATH', 'Image/');
+			$username = $_SESSION['username'];
 			//Database Connection
 			$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user');
 			$sql = " SELECT * FROM user_info WHERE username = '$username'";
@@ -27,6 +29,5 @@
 			}
 	}
 		?>
-		<a href="mismatch_edit_profile.php">Edit your profile</a>
 	</body>
 </html>
