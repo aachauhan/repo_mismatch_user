@@ -21,6 +21,7 @@
 			if (isset($_SESSION['username'])) {
 				echo '&#10084; <a href="mismatch_view_profile.php">View Profile</a><br />';
 				echo '&#10084; <a href="mismatch_edit_profile.php">Edit Profile</a><br />';
+				echo '&#10084; <a href="mismatch_questionnaire.php">Questionnaire</a><br />';
 			}
 		define('GW_UPLOADPATH', 'Image/');
 		$dbc = mysqli_connect('localhost', 'root', 'root', 'mismatch_user') or die('Error Connecting Database');

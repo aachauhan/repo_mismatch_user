@@ -30,7 +30,7 @@
 				}
 				else{
 					// The username/password are incorrect so set an error message
-					$error_log = 'Sorry, you must enter a valid username and password to log in.';
+					$error_log = 'Sorry, you must enter a valid username and password to log in.';	
 				}
 			}
 			else {
